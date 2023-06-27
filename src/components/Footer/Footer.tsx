@@ -13,7 +13,6 @@ import Link from "next/link.js";
 import MobileFooter from "./MobileFooter";
 import { footerLinks } from "@/assets/data";
 
-
 const Footer = () => {
   const date = new Date();
   const year = date.getFullYear();
@@ -36,7 +35,7 @@ const Footer = () => {
       icon: BsInstagram,
     },
     {
-      to: "https://www.pinterest.com/", 
+      to: "https://www.pinterest.com/",
       icon: BsPinterest,
     },
   ];
@@ -72,14 +71,14 @@ const Footer = () => {
             <div className="flex items-center justify-start gap-4 flex-col md:flex-row">
               <div className="flex items-end justify-end select-none">
                 <h2 className="text-3xl select-none font-black tracking-wide text-gray-500">
-                  skillbrisk
+                  megamart
                 </h2>
                 <span className="border text-[6px] rounded-full w-3 h-3 flex items-center justify-center">
                   R
                 </span>
               </div>
               <p className="text-sm font-medium text-gray-400">
-                © Skillbrisk International Ltd. {year}
+                © MegaMart International Ltd. {year}
               </p>
             </div>
             <div className="flex items-center justify-end lg:gap-6 flex-col md:flex-row">

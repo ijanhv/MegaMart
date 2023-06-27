@@ -16,6 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
    
           <AppBar />
+          <SecondaryAppBar />
+
    
          
           {children}

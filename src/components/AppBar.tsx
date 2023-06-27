@@ -25,7 +25,7 @@ const AppBar = () => {
 
           <input
             type="text"
-            className="w-full text-sm border border-primary-600 border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none"
+            className="w-full text-sm border bg-secondary-50 border-primary-600 border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none"
             placeholder="Search for products"
           />
           <button className="bg-primary-600 font-poppins text-sm text-white px-2 py-3  rounded-r-md hover:bg-primary-500 transition">
@@ -36,9 +36,9 @@ const AppBar = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-7 text-center text-secondary-600 text-sm ">
-          <div className="hover:text-primary-600 transition cursor-pointer">
+          <Link href="/products/wishlist" className="hover:text-primary-600 transition cursor-pointer">
             <Heart size={28} strokeWidth={1.5} />
-          </div>
+          </Link>
           <div className="hover:text-primary-600 transition cursor-pointer relative">
             <ShoppingCart size={28} strokeWidth={1.5} />
             <span className="absolute top-0 inline-flex items-center justify-center w-4 h-4 bg-primary-500 rounded-full text-white text-xs">

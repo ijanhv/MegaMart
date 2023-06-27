@@ -1,13 +1,14 @@
 import { Heart, Search, ShoppingBag, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { BsStarFill } from "react-icons/bs";
 
 const ProductCard = () => {
     return (
       <div className="shadow-md rounded overflow-hidden">
         <div className="relative">
           <Image
-            src="https://www.ikea.com/in/en/images/products/gammalbyn-2-seat-sofa-blue__0865034_pe781333_s5.jpg?f=xl"
+            src="https://m.media-amazon.com/images/I/71LT4PvFFXL._AC_UY1100_.jpg"
             alt="product"
             className="w-full"
             width={600}
@@ -31,7 +32,7 @@ const ProductCard = () => {
   
         {/* content */}
   
-        <div className="pt-4 pb-1 px-4 my-2">
+        <div className="pt-1 pb-1 px-4 my-2">
           <h4 className="font-poppins text-sm mb-2 text-semibold  text-secondary-700 hover:text-primary-600">
             Chair
           </h4>
@@ -40,15 +41,16 @@ const ProductCard = () => {
             <p className="text-sm text-secondary-500 line-through">$55</p>
           </div>
           <div className="flex items-center">
-            <div className="flex gap-1 text-sm text-yellow-400">
+            <div className="flex gap-1 text-xs text-yellow-400">
               <span className="flex">
-                <Star />
-                <Star />
-                <Star />
-                <Star />
+                <BsStarFill />
+                <BsStarFill />
+                <BsStarFill />
+                <BsStarFill />
+                <BsStarFill />
               </span>
             </div>
-            <div className="text-sx text-secondary-500 ml-3">(150)</div>
+            <div className="text-xs  text-secondary-500 ml-3">(150)</div>
           </div>
         </div>
         <button className="w-full flex items-center justify-center gap-3 text-center border border-3 uppercase border-white py-3 text-sm bg-primary-600 text-white font-semibold rounded-b hover:bg-transparent hover:border-primary-600  hover:text-primary-600">
