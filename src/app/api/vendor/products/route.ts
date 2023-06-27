@@ -207,3 +207,7 @@ export async function DELETE(
 
   return new Response(JSON.stringify(product));
 }
+
+
+// give description of this application
+// MegaMart is an online shopping platform that allows vendors to sell their products to customers.
