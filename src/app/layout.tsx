@@ -1,8 +1,7 @@
-import AppBar from "@/components/AppBar";
 import "./globals.css";
-import Providers from "@/components/Providers";
-import SecondaryAppBar from "@/components/SecondaryAppBar";
-import Footer from "@/components/Footer/Footer";
+
+import Navbar from "@/components/Vendor/Navbar";
+import Sidebar from "@/components/Vendor/Sidebar";
 
 export const metadata = {
   title: "MegaMart",
@@ -13,17 +12,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Providers>
+        {/* <Providers>
    
           <AppBar />
-          <SecondaryAppBar />
+          <SecondaryAppBar /> */}
 
-   
+          <Navbar />
+          <Sidebar />
          
           {children}
-          <Footer />
+          {/* <Footer />
 
-        </Providers>
+        </Providers> */}
       </body>
     </html>
   );

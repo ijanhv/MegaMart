@@ -10,28 +10,23 @@ interface NavProps {
 const SecondaryAppBar = () => {
   const navLinks = [
     {
-      name: "Furniture",
+      name: "Women",
       href: "/",
     },
     {
-      name: "Clothing",
+      name: "Men",
       href: "/",
     },
     {
-      name: "Electronics",
+      name: "Kids",
       href: "/",
-    },
-    {
-        name: "Appliances",
-        href: "/",
-
-    },
-    {
-        name: "Toys",
-        href: "/",
     },
     {
       name: "Beauty",
+      href: "/",
+    },
+    {
+      name: "Accessories",
       href: "/",
     },
   ];
@@ -42,9 +37,7 @@ const SecondaryAppBar = () => {
         {/* All */}
         <div className="px-6 py-3 bg-primary-600 flex items-center cursor-pointer ">
           <MenuIcon className="text-white" size={20} strokeWidth={1.5} />
-          <span className="text-white text-sm font-poppins mx-3">
-            All 
-          </span>
+          <span className="text-white text-sm font-poppins mx-3">All</span>
         </div>
         {/* All */}
 

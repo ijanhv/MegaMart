@@ -36,18 +36,19 @@ const AppBar = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-7 text-center text-secondary-600 text-sm ">
-          <Link href="/products/wishlist" className="hover:text-primary-600 transition cursor-pointer">
+          <Link href="user/account/wishlist" className="hover:text-primary-600 transition cursor-pointer">
             <Heart size={28} strokeWidth={1.5} />
           </Link>
-          <div className="hover:text-primary-600 transition cursor-pointer relative">
+          <Link href="user/cart" className="hover:text-primary-600 transition cursor-pointer relative">
             <ShoppingCart size={28} strokeWidth={1.5} />
             <span className="absolute top-0 inline-flex items-center justify-center w-4 h-4 bg-primary-500 rounded-full text-white text-xs">
           6
         </span>
-          </div>
-          <div className="hover:text-primary-600 transition cursor-pointer">
+          </Link>
+
+          <Link href="user/account" className="hover:text-primary-600 transition cursor-pointer">
             <User size={28} strokeWidth={1.5} />
-          </div>
+          </Link>
         </div>
         {/* Icons */}
       </div>

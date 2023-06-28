@@ -10,15 +10,7 @@ const Wishlist = () => {
 
     </div>
     <div className="container py-4 items-center">
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-7">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-        </div>
+        
     </div>
     </div>
   )

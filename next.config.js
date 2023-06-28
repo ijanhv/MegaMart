@@ -18,7 +18,9 @@ const nextConfig = {
       "housing.com",
       "hvv.g.shopcadacdn.com",
       "fayth.com",
-      "www.ikea.com"
+      "www.ikea.com",
+      "images.unsplash.com",
+      "flowbite.com"
     ],
   },
 };
