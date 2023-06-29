@@ -3,6 +3,7 @@ import "./../globals.css";
 import SecondaryAppBar from "@/components/SecondaryAppBar";
 import Footer from "@/components/Footer/Footer";
 import Providers from "@/components/Providers";
+import { ReactQueryProvider } from "@/components/ReactQueryProvider";
 
 export const metadata = {
   title: "MegaMart",
@@ -13,15 +14,19 @@ interface IProps {
   children: React.ReactNode;
 }
 
-export default function UserLayout({ children }: IProps) {
+export default async function UserLayout({ children }: IProps) {
+
   return (
     <html lang="en">
       <body>
+
         <Providers>
-          <AppBar />
-          <SecondaryAppBar />
-          {children}
-          <Footer />
+          <ReactQueryProvider >
+            <AppBar />
+            <SecondaryAppBar />
+            {children}
+            <Footer />
+            </ReactQueryProvider>
         </Providers>
 
       </body>

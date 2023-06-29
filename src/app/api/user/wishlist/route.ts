@@ -27,77 +27,12 @@ export async function GET(request: Request) {
       }
     );
   }
-
   const wishlist = await prisma.wishlist.findMany({
     where: {
       userId,
     },
     include: {
       product: true,
-    },
-  });
-
-  return new Response(JSON.stringify(wishlist));
-}
-
-// Add product to wishlist
-export async function POST(request: Request) {
-  const userId = await validateAccessToken(request);
-  if (!userId) {
-    return new Response(
-      JSON.stringify({
-        error: "unauthorized",
-      }),
-      {
-        status: 401,
-      }
-    );
-  }
-
-  const body: RequestBody = await request.json();
-  const { productId } = body;
-
-  const product = await prisma.product.findUnique({
-    where: {
-      id: productId,
-    },
-  });
-
-  if (!product) {
-    return new Response(
-      JSON.stringify({
-        error: "product not found",
-      }),
-      {
-        status: 404,
-      }
-    );
-  }
-
-  // if product already in wishlist
-  const wishlistItem = await prisma.wishlist.findFirst({
-    where: {
-      userId,
-      productId,
-    },
-  });
-
-  if (wishlistItem) {
-    return new Response(
-      JSON.stringify({
-        error: "Product already in wishlist",
-      }),
-      {
-        status: 409,
-      }
-    );
-
-  }
-
-  const wishlist = await prisma.wishlist.create({
-    data: {
-      productId,
-      userId,
     },
   });
 

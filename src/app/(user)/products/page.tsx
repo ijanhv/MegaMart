@@ -1,12 +1,13 @@
-"use client";
-import React, { useState } from "react";
+'use client'
+import React from "react";
 import Breadcrums from "@/components/Breadcrums";
-import { useRouter } from "next/router";
-import { usePathname, useSearchParams } from "next/navigation";
 import Drawer from "@/components/Drawer";
 import { Grid, ListIcon, Table } from "lucide-react";
 import { List } from "immutable";
 import ProductCard from "@/components/ProductCard";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "@/utils/newRequest";
+
 
 const categories = [
   "Men's Fashion",
@@ -16,7 +17,17 @@ const categories = [
   "Shoes",
 ];
 
-const Products = () => {
+
+const Products = ( ) => {
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["allProducts"],
+    queryFn: () =>
+      newRequest.get('/products')
+  });
+
+  console.log(data?.data);
+
   return (
     <div className="bg-secondary-50">
       <Breadcrums currentPath="Products" />
@@ -142,14 +153,23 @@ const Products = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {isLoading ? <p>Loading...</p>
+              : error ? <p>Error</p>
+                : data?.data?.map((product: any, i: number) => (
+                  <ProductCard key={i} product={product} />
+                ))  
+          }
+
+
+            {/* }
             <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
-            <ProductCard />
+            <ProductCard /> */}
           </div>
           {/* Sorting */}
         </div>
@@ -162,3 +182,4 @@ const Products = () => {
 };
 
 export default Products;
+

@@ -35,12 +35,12 @@ const Hero = () => {
         <p className="mt-5 font-poppins text-center text-lg text-white opacity-70">
           This webiste is about programming and things like that
         </p>
-        <a
+        <Link
           className="mt-8 px-12 py-3 bg-primary-600 font-poppins text-xl text-white font-semibold drop-shadow-lg "
-          href="#"
+          href="/products"
         >
           Shop Now
-        </a>
+        </Link>
       </div>
     </main>
   );
