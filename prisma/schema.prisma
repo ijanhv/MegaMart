@@ -11,79 +11,85 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  name      String
-  email     String     @unique
-  password  String
-  role      Role?      @default(USER) // Possible values: 'user', 'vendor', 'admin'
-  address   String?
-  orders    Order[]
-  cartItems CartItem[]
-  Wishlist  Wishlist[]
-  Review    Review[]
+  id                Int        @id @default(autoincrement())
+  name              String
+  email             String     @unique
+  password          String
+  role              Role?      @default(USER) // Possible values: 'user', 'vendor', 'admin'
+  address           String?
+  orders            Order[]
+  cartItems         CartItem[]
+  Wishlist          Wishlist[]
+  Review            Review[]
+  numberOfPurchases Int        @default(0)
 }
 
 // Wishlist model
 model Wishlist {
-  id        Int        @id @default(autoincrement())
-  updatedAt DateTime   @updatedAt
+  id        Int      @id @default(autoincrement())
+  updatedAt DateTime @updatedAt
   userId    Int
-  user      User       @relation(fields: [userId], references: [id])
-  items     CartItem[]
+  user      User     @relation(fields: [userId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 // Order model 
 model Order {
-  id        Int        @id @default(autoincrement())
-  updatedAt DateTime   @updatedAt
+  id        Int      @id @default(autoincrement())
+  updatedAt DateTime @updatedAt
   total     Float
   userId    Int
-  user      User       @relation(fields: [userId], references: [id])
-  items     CartItem[]
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 // CartItem model
 model CartItem {
-  id         Int       @id @default(autoincrement())
-  updatedAt  DateTime  @updatedAt
-  quantity   Int
-  productId  Int
-  orderId    Int?
-  order      Order?    @relation(fields: [orderId], references: [id])
-  wishlistId Int?
-  wishlist   Wishlist? @relation(fields: [wishlistId], references: [id])
-  userId     Int
-  user       User      @relation(fields: [userId], references: [id])
+  id        Int      @id @default(autoincrement())
+  updatedAt DateTime @updatedAt
+  quantity  Int
+  productId Int
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([productId, userId])
 }
 
 model Vendor {
-  id       Int       @id @default(autoincrement())
-  name     String
-  email    String    @unique
-  password String
-  address  String?
-  products Product[]
-  role     Role      @default(VENDOR)
+  id               Int       @id @default(autoincrement())
+  name             String
+  email            String    @unique
+  password         String
+  address          String?
+  products         Product[]
+  role             Role      @default(VENDOR)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  numberOfProducts Int       @default(0)
 }
 
 model Product {
-  id            Int      @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   name          String
   description   String
   price         Float
   imageUrl      String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   brand         String
   color         String?
   size          String?
   averageRating Float?
-  isFeatured    Boolean  @default(false)
+  isFeatured    Boolean    @default(false)
   category      String
   inventory     Int // Number of items in stock
-  Vendor        Vendor?  @relation(fields: [vendorId], references: [id])
+  Vendor        Vendor?    @relation(fields: [vendorId], references: [id])
   vendorId      Int?
   Review        Review[]
+  Wishlist      Wishlist[]
+  @@unique([vendorId, id])
+
+
 }
 
 // Reviews

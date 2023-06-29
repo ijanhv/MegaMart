@@ -1,4 +1,7 @@
 import NextAuth from "next-auth/next";
+
+
+
 import CredentialsProvider from "next-auth/providers/credentials";
 const handler = NextAuth({
   providers: [
@@ -14,6 +17,7 @@ const handler = NextAuth({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            
           },
           body: JSON.stringify({
             username: credentials?.username,
@@ -24,6 +28,7 @@ const handler = NextAuth({
         const user = await res.json();
 
         if (user) {
+          
           // Any object returned will be saved in `user` property of the JWT
           return user;
         } else {
@@ -36,7 +41,8 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user } : any) {
+  
       return { ...token, ...user };
     },
 

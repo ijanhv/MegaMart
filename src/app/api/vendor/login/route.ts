@@ -1,12 +1,14 @@
 import { signJwtAccessToken, verifyJwt } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcrypt";
+import { NextRequest, NextResponse } from "next/server";
 
 interface RequestBody {
   email: string;
   password: string;
+
 }
-export async function POST(request: Request) {
+export async function POST(request: NextRequest, ) {
   const body: RequestBody = await request.json();
 
   const vendor = await prisma.vendor.findFirst({
@@ -19,9 +21,8 @@ export async function POST(request: Request) {
     const { password, ...userWithoutPass } = vendor;
     console.log("userWithoutPass", userWithoutPass);
     const accessToken = signJwtAccessToken(userWithoutPass);
-    // set cookies
-    // const decoded =  verifyJwt(accessToken);
-    // console.log("decoded", decoded);
+    
+
     const result = {
       ...userWithoutPass,
       accessToken,

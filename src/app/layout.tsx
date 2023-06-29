@@ -17,8 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AppBar />
           <SecondaryAppBar /> */}
 
-          <Navbar />
-          <Sidebar />
+         
          
           {children}
           {/* <Footer />
