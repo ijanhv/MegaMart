@@ -74,36 +74,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const wishlist = await prisma.wishlist.create({
-    data: {
-      productId,
-      userId,
-    },
-  });
-
-  return new Response(JSON.stringify(wishlist));
-}
-
-// Remove product from wishlist
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: { productId: number } }
-) {
-  const userId = await validateAccessToken(request);
-  if (!userId) {
-    return new Response(
-      JSON.stringify({
-        error: "unauthorized",
-      }),
-      {
-        status: 401,
-      }
-    );
-  }
-
-  const productId = +params.productId;
-
+  // if product already in wishlist
   const wishlistItem = await prisma.wishlist.findFirst({
     where: {
       userId,
@@ -111,20 +82,22 @@ export async function DELETE(
     },
   });
 
-  if (!wishlistItem) {
+  if (wishlistItem) {
     return new Response(
       JSON.stringify({
-        error: "product not found",
+        error: "Product already in wishlist",
       }),
       {
-        status: 404,
+        status: 409,
       }
     );
+
   }
 
-  const wishlist = await prisma.wishlist.delete({
-    where: {
-      id: wishlistItem.id,
+  const wishlist = await prisma.wishlist.create({
+    data: {
+      productId,
+      userId,
     },
   });
 

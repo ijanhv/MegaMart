@@ -41,7 +41,6 @@ export async function GET(request: Request) {
 }
 
 // Add product to cart
-
 export async function POST(request: Request) {
   const userId = await validateAccessToken(request);
 
@@ -86,13 +85,15 @@ export async function POST(request: Request) {
     },
   });
 
+  console.log(cartItem);
+
   if (cartItem) {
     await prisma.cartItem.update({
       where: {
         id: cartItem.id,
       },
       data: {
-        quantity: cartItem.quantity + 1,
+        quantity: cartItem.quantity ++,
       },
     });
 
@@ -113,49 +114,3 @@ export async function POST(request: Request) {
   }
 }
 
-// Reomve product from cart
-export async function DELETE(request: Request) {
-  const userId = await validateAccessToken(request);
-
-  if (!userId) {
-    return new Response(
-      JSON.stringify({
-        error: "unauthorized",
-      }),
-      {
-        status: 401,
-      }
-    );
-  }
-
-  const body: RequestBody = await request.json();
-  const { productId } = body;
-
-  const cartItem = await prisma.cartItem.findUnique({
-    where: {
-      productId_userId: {
-        productId: productId,
-        userId: userId,
-      },
-    },
-  });
-
-  if (!cartItem) {
-    return new Response(
-      JSON.stringify({
-        error: "cart item not found",
-      }),
-      {
-        status: 404,
-      }
-    );
-  }
-
-  await prisma.cartItem.delete({
-    where: {
-      id: cartItem.id,
-    },
-  });
-
-  return new Response(JSON.stringify(cartItem));
-}

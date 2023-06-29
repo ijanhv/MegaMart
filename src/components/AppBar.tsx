@@ -1,16 +1,22 @@
+'use client'
+
 import Link from "next/link";
 import React from "react";
-import SigninButton from "./SigninButton";
 import { Heart, Search, ShoppingCart, User } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 const AppBar = () => {
-  return (
-   
+  const { data: session } = useSession();
+  console.log( session?.user);
+ 
+  return (  
     <nav className="py-4 shadow-sm bg-secondary-50 ">
       <div className="container flex items-center justify-between space-x-5">
         {/* Logo */}
+      
+
         <Link href="/">
-          <h1 className="font-poppins text-lg">
+          <h1 className="font-poppins text-lg text-secondary-600">
             <span className="text-primary-600 font-extrabold">MEGA</span>MART
           </h1>
         </Link>
@@ -46,9 +52,16 @@ const AppBar = () => {
         </span>
           </Link>
 
+          <div className="flex items-center gap-2">
+
           <Link href="user/account" className="hover:text-primary-600 transition cursor-pointer">
             <User size={28} strokeWidth={1.5} />
           </Link>
+
+          {session?.user &&
+            <p className="text-sm font-poppins">{session?.user.name}</p>}
+          </div>
+
         </div>
         {/* Icons */}
       </div>

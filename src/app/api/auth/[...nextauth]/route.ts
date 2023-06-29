@@ -1,9 +1,12 @@
+import prisma from "@/lib/prisma";
 import NextAuth from "next-auth/next";
-
-
+import bcrypt from "bcrypt";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import CredentialsProvider from "next-auth/providers/credentials";
+
 const handler = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -17,7 +20,6 @@ const handler = NextAuth({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            
           },
           body: JSON.stringify({
             username: credentials?.username,
@@ -28,8 +30,8 @@ const handler = NextAuth({
         const user = await res.json();
 
         if (user) {
-          
           // Any object returned will be saved in `user` property of the JWT
+
           return user;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
@@ -37,19 +39,28 @@ const handler = NextAuth({
 
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
+        // const user = await res.json()
+        // If no error and we have user data, return it
+
+        // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user } : any) {
-  
+    async jwt({ token, user }: any) {
       return { ...token, ...user };
     },
-
     async session({ session, token }) {
       session.user = token as any;
       return session;
     },
+  },
+
+  session: {
+    strategy: "jwt",
+},
+  pages: {
+    signIn: "/auth/signin",
   },
 });
 
