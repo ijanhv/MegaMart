@@ -13,23 +13,23 @@ const WishlistCard = ({ product }: any) => {
     const id = parseInt(product?.id);
     
     const mutation = useMutation(
-      () => axios.delete(`/api/user/wishlist/${id}`,{
+      () =>
+        axios.delete(`/api/user/wishlist/${id}`, {
           headers: {
             Authorization: `${session?.user?.accessToken}`,
           },
-          }
-        ),
+        }),
       {
         onSuccess: () => {
-          queryClient.invalidateQueries(["wishlist"]);
+          queryClient.refetchQueries(["wishlist"]); 
+          queryClient.invalidateQueries(["user"]); // Pass an array of query keys
           toast.success("Product removed from wishlist");
         },
         onError: (error: any) => {
           toast.error(error?.response?.data.error);
-        }
+        },
       }
     );
-
 
 
   console.log(product);

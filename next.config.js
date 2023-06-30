@@ -20,7 +20,9 @@ const nextConfig = {
       "fayth.com",
       "www.ikea.com",
       "images.unsplash.com",
-      "flowbite.com"
+      "flowbite.com",
+      "constant.myntassets.com",
+      "assets.myntassets.com"
     ],
   },
 };

@@ -1,5 +1,5 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import Breadcrums from "@/components/Breadcrums";
 import Drawer from "@/components/Drawer";
 import { Grid, ListIcon, Table } from "lucide-react";
@@ -9,24 +9,55 @@ import { useQuery } from "@tanstack/react-query";
 import newRequest from "@/utils/newRequest";
 
 
-const categories = [
-  "Men's Fashion",
-  "Women's Fashion",
+const category = [
+  "Men's Clothing",
+  "Women's Clothing",
   "Tops",
-  "Bottoms",
+  "Footwear",
   "Shoes",
 ];
+
+const brand = [
+  "FashionCo",
+  "DenimDreams",
+  "CozyKnits",
+  "BlossomBoutique",
+  "ChicFemme"
+];
+
 
 
 const Products = ( ) => {
 
+  const [categories, setCategories] = useState<Array<string>>([]);
+  const [brands, setBrands] = useState<Array<string>>([]);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(31232);
+
+  console.log(categories);
+
+
+  // const { isLoading, error, data } = useQuery({
+  //   queryKey: ["allProducts"],
+  //   queryFn: () =>
+  //     newRequest.get('/products')
+  // });
+
+  // console.log(data?.data);
+
+  const categoriesString = categories.join(",");
+
   const { isLoading, error, data } = useQuery({
-    queryKey: ["allProducts"],
-    queryFn: () =>
-      newRequest.get('/products')
+    queryKey: ["products", { categoriesString, brands, minPrice, maxPrice }],
+    queryFn: () => newRequest.get(`/products?categories=${categoriesString}&brands=${brands}&minPrice=${minPrice}&maxPrice=${maxPrice}`, 
+    ),
   });
 
-  console.log(data?.data);
+  
+
+
+
+  
 
   return (
     <div className="bg-secondary-50">
@@ -41,17 +72,26 @@ const Products = ( ) => {
         <div className="hidden md:block col-span-1 px-4 pb-6 shadow rounded overflow-hidden">
           <div className="divide-y divide-gray-200 space-y-5">
             <div className="">
+            {categories}
+
               <h3 className="text-lg text-secondary-600 mb-3 uppercase font-medium">
                 Categories
               </h3>
               <div className="space-y-2">
-                {categories.map((item, i) => (
+                {category.map((item, i) => (
                   <div key={i} className="flex items-center">
                     <input
                       type="checkbox"
                       name=""
                       id="category1"
                       className="mr-2 text-primary-600 bg-secondary-50"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setCategories((prev) => [...prev, item]);
+                        } else {
+                          setCategories((prev) => prev.filter((x) => x !== item));
+                        }
+                      }}
                     />
                     <label
                       htmlFor="category1"
@@ -71,13 +111,21 @@ const Products = ( ) => {
                 Brands
               </h3>
               <div className="space-y-2">
-                {categories.map((item, i) => (
+                {brand.map((item, i) => (
                   <div key={i} className="flex items-center">
                     <input
                       type="checkbox"
                       name=""
                       id="category1"
                       className="mr-2 text-primary-600"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setBrands((prev) => [...prev, item]);
+                        } else {
+                          setBrands((prev) => prev.filter((x) => x !== item));
+                        }
+                      }}
+                        
                     />
                     <label
                       htmlFor="category1"
@@ -102,11 +150,13 @@ const Products = ( ) => {
                   type="text"
                   className="w-1/2 text-sm border bg-secondary-50 border-secondary-600 p-2 rounded-md focus:outline-none"
                   placeholder="Min"
+                  onChange={(e) => setMinPrice(parseInt(e.target.value))}
                 />
                 <input
                   type="text"
                   className="w-1/2 text-sm border bg-secondary-50 border-secondary-600 p-2 rounded-md focus:outline-none"
                   placeholder="Max"
+                  onChange={(e) => setMaxPrice(parseInt(e.target.value))}
                 />
               </div>
             </div>
@@ -153,7 +203,7 @@ const Products = ( ) => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {isLoading ? <p>Loading...</p>
               : error ? <p>Error</p>
                 : data?.data?.map((product: any, i: number) => (
@@ -162,14 +212,7 @@ const Products = ( ) => {
           }
 
 
-            {/* }
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard /> */}
+           
           </div>
           {/* Sorting */}
         </div>

@@ -1,3 +1,4 @@
+import { validateAccessToken } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcrypt";
 
@@ -6,12 +7,15 @@ interface RequestBody {
   email: string;
   password: string;
   address: string;
+  id: number;
+
 }
 
-// get hello
-export async function GET() {
-  return new Response(JSON.stringify({ hello: "world" }));
-}
+
+
+
+
+
 
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
@@ -52,7 +56,6 @@ export async function PUT(request: Request) {
       email,
       password: await bcrypt.hash(password, 10),
       address
-      
     },
   });
 

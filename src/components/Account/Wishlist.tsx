@@ -17,6 +17,9 @@ const Wishlist = () => {
           Authorization: `${session?.user?.accessToken}`,
         },
       }),
+    enabled: !!session?.user?.accessToken,
+
+
   });
 
   console.log(data?.data);

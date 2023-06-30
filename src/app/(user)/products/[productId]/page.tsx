@@ -9,24 +9,35 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
-const ProductDetails = () => {
-  const pathname = usePathname();
-  console.log(pathname);
 
-  const productId = parseInt(pathname.split("/")[2]);
+interface ProductProps {
+  params : {
+    productId: string
+  }
+  
+}
+
+
+// CategoryPage: React.FC<CategoryPageProps>
+const ProductDetails: React.FC<ProductProps> = ({ params }) => {
+  // const pathname = usePathname();
+  // console.log(pathname);
+
+  // const productId = parseInt(pathname.split("/")[2]);
+  // console.log(productId);
+
+  const productId = params.productId;
   console.log(productId);
-
   const { data: session } = useSession();
 
   const { isLoading, error, data } = useQuery(["product", productId], () =>
-    axios.get(`/api/products/${productId}`, {
-      headers: {
-        Authorization: `${session?.user.accessToken}`,
-      },
-    })
+    axios.get(`/api/products/${productId}`),
+    
   );
 
   console.log(data?.data);
+
+ 
 
   return (
     <div className="bg-secondary-50 pb-10">
@@ -45,10 +56,10 @@ const ProductDetails = () => {
             <div>
               <Image
                 alt="product"
-                src="https://m.media-amazon.com/images/I/71LT4PvFFXL._AC_UY1100_.jpg"
-                width={500}
-                height={500}
-                className="w-full"
+                src={data?.data.imageUrl}
+                width={1080}
+                height={800}
+                className="w-full h-[500px] object-cover"
               />
               <div className="grid grid-cols-5 gap-5 mt-4">
                 <Image

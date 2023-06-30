@@ -1,9 +1,13 @@
-import { Heart, LogOutIcon, ShoppingBag, User } from "lucide-react";
+'use client'
+
+import { Heart, LogIn, LogOutIcon, ShoppingBag, User } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
 const Sidebar = () => {
+  const { data: session } = useSession();
+
   return (
     <>
       <div className="px-4 py-3 shadow flex items-center gap-4">
@@ -17,86 +21,90 @@ const Sidebar = () => {
           />
         </div>
         <div className="flex-grow">
-          <p className="text-secondary-600">Hello</p>
-          <h4 className="text-secondary-700 font-medium">Daisy</h4>
+          <p className="text-secondary-600">Name</p>
+          <h4 className="text-secondary-700 font-medium">{!session ? 'Guest' : session.user.name}</h4>
         </div>
       </div>
       {/* Links */}
       <div className="mt-6 shadow rounded p-4 divide-y divide-secondary-200 space-y-4 text-secondary-600">
         <div className="space-y-1 pl-8 ">
-          <span
-            // onClick={() => setActiveTab("profile")}
 
-            className="relative block text-primary-600 cursor-pointer hover:text-primary-600 transition "
-          >
-            <span className="absolute -left-8 top-0 text-base">
-              <User />{" "}
-            </span>
-            Manage Account
-          </span>
-          <Link
-            href="/account/orders"
-            className=" relative block hover:text-primary-600 transition"
-          >
-            Orders
+            <Link href="/account" className={`relative block text-primary-600 cursor-pointer hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              <span className="absolute -left-8 top-0 text-base">
+                <User />{" "}
+              </span>
+              Manage Account
+            </Link>
+    
+   
+            <Link href="/account/orders" className={`relative block hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              Orders
+          
           </Link>
-          <Link
-            href="/account/password"
-            className=" relative block hover:text-primary-600 transition"
-          >
-            Change Password
+       
+          <Link href="/account/password" className={`relative block hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              Change Password
+ 
           </Link>
-          <Link
-            href="/account/address"
-            className="relative block hover:text-primary-600 transition"
-          >
-            Address
+     
+            <Link href="/account/address" className={`relative block hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              Address
+
           </Link>
         </div>
         <div className="space-y-2 pl-8 pt-3 ">
-          <Link href="/account" className="relative block text-primary-600 ">
-            <span className="absolute -left-8 top-0 text-base">
-              <ShoppingBag />{" "}
-            </span>
-            Order History
+
+            <Link href="/account" className={`relative block text-primary-600 ${!session ? 'pointer-events-none' : ''}`}>
+              <span className="absolute -left-8 top-0 text-base">
+                <ShoppingBag />{" "}
+              </span>
+              Order History
+
           </Link>
-          <Link
-            href="/account/orders"
-            className=" relative block hover:text-primary-600 transition"
-          >
-            Orders
+   
+            <Link href="/account/orders" className={`relative block hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              Orders
+
           </Link>
-          <Link
-            href="/account/password"
-            className=" relative block hover:text-primary-600 transition"
-          >
-            Returns
+         
+         <Link href="/account/password" className={`relative block hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              Returns
+     
           </Link>
-          <Link
-            href="/account/address"
-            className=" relative block hover:text-primary-600 transition"
-          >
-            Cancellations
+   
+            <Link href="/account/address" className={`relative block hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              Cancellations
+          
           </Link>
         </div>
         <div className="space-y-2 pl-8 pt-3 ">
-          <span
-            className="relative block text-secondary-600  cursor-pointer hover:text-primary-600 transition"
-            // onClick={() => setActiveTab("wishlist")}
-          >
-            <span className="absolute -left-8 top-0 text-base">
-              <Heart />{" "}
-            </span>
-            WishList
-          </span>
+
+            <Link href="/account/wishlist" className={`relative block text-secondary-600 cursor-pointer hover:text-primary-600 transition ${!session ? 'pointer-events-none' : ''}`}>
+              <span className="absolute -left-8 top-0 text-base">
+                <Heart />{" "}
+              </span>
+              WishList
+         
+          </Link>
         </div>
         <div className="space-y-2 pl-8 pt-3 ">
-          <Link href="/account" className="relative block text-secondary-600 ">
+          {!session ?
+          <Link href="/auth/signin" className="relative block text-secondary-600 cursor-pointer hover:text-primary-600 transition">
+
+              <span className="absolute -left-8 top-0 text-base">
+                <LogIn />{" "}
+              </span>
+              Login
+          </Link>
+          :
+
+            <button onClick={() => signOut()} className="relative block text-secondary-600 ">
             <span className="absolute -left-8 top-0 text-base">
-              <LogOutIcon />{" "}
+               <LogOutIcon />
             </span>
             Logout
-          </Link>
+          </button>
+          }
         </div>
       </div>
     </>
