@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { signIn } from "next-auth/react";
 
-interface UserLoginProps {
+interface VendorLoginProps {
   setAuth: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -16,41 +16,30 @@ interface FormInput {
   password: string;
 }
 
-const UserLogin = ({ setAuth }: UserLoginProps) => {
+const VendorLogin = ({ setAuth }: VendorLoginProps) => {
   const router = useRouter();
   const { register, handleSubmit } = useForm<FormInput>();
- 
 
-  const onSubmit: SubmitHandler<FormInput> = async (user) => {
+  const onSubmit: SubmitHandler<FormInput> = async (vendor) => {
     try {
-      const res = await signIn("credentials", {
-        username: user.email,
-        password: user.password,
-        redirect: false,
-        callbackUrl: "/",
-      });
-      console.log(res);
+        const res = await newRequest.post("/vendor/login", vendor);
+        console.log(res.data.accessToken);
+        
+        localStorage.setItem("currentVendor", JSON.stringify(res.data.accessToken));
 
-    
-      if(res?.error === null) {
         toast.success("Login Successfull!");
         await new Promise<void>((resolve) => setTimeout(resolve, 2000));
-        router.push("/");
-      }
-
-      if(res?.error === "CredentialsSignin") {
-        toast.error("Login Failed!");
-      }
-   
-
-
+        router.push("/vendor");
     } catch (error: any) {
-      console.log(error?.response?.data.message);
-      toast.error(error?.response?.data.message);
+        console.log(error?.response?.data.message);
+        toast.error(error?.response?.data.message);
     }
-  };
+};
+
+
+
   return (
-    <div className="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
+    <div className="max-w-lg mx-auto px-6 py-7 rounded overflow-hidden">
       <h2 className="text-2xl text-secondary-600 font-poppins font-semibold uppercase">
         Login
       </h2>
@@ -127,35 +116,17 @@ const UserLogin = ({ setAuth }: UserLoginProps) => {
         </p>
       </form>
 
-      {/* <Toaster
-        position="bottom-right"
-        toastOptions={{
-         
-          className: '',
-          style: {
-            border: '1px solid #713200',
-            padding: '16px',
-            color: '#713200',
-      
-            
-          },
-        }}
-      
-      /> */}
+   
       <ToastContainer
         position="top-right"
         autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
+       
       />
     </div>
   );
 };
 
-export default UserLogin;
+export default VendorLogin;

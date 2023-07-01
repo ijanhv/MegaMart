@@ -15,6 +15,7 @@ model User {
   name              String
   email             String     @unique
   password          String
+  phoneNumber       String?
   role              Role?      @default(USER) // Possible values: 'user', 'vendor', 'admin'
   address           String?
   orders            Order[]

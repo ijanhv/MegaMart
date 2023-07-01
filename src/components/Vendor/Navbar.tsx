@@ -4,12 +4,36 @@ import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { BsMenuApp } from "react-icons/bs";
+
 import { GiHamburgerMenu } from "react-icons/gi";
-;
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
 
 const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    let accessToken: string | null = null;
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("currentVendor");
+      accessToken = storedToken ? JSON.parse(storedToken) : null;
+    }
+    console.log(accessToken);
+
+    const { isLoading, error, data } = useQuery({
+      queryKey: ["vendor"],
+      queryFn: () =>
+        axios.get("/api/vendor", {
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+        }),
+      enabled: !!accessToken,
+    });
+
+    console.log(data?.data);
+
+
 
   return (
     <>
@@ -34,7 +58,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex items-center ml-3">
               <div className="flex gap-4 items-center font-poppins">
-                  <h3 className="text-secondary-700 text-lg ">Mike Ross</h3>
+                  <h3 className="text-secondary-700 text-lg ">{data?.data.name}</h3>
                   <Image 
                     width={32}
                     height={32}

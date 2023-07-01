@@ -6,10 +6,9 @@ interface RequestBody {
 }
 
 // Reomve product from cart
-
 export async function DELETE(
   request: Request,
-  { params }: { params: { cartItemId: number } }
+  { params }: { params: { productId: number } }
 ) {
   const userId = await validateAccessToken(request);
 
@@ -26,7 +25,7 @@ export async function DELETE(
 
   const cartItem = await prisma.cartItem.findFirst({
     where: {
-      id: +params.cartItemId,
+      productId: +params.productId,
       userId,
     },
   });
@@ -44,7 +43,8 @@ export async function DELETE(
 
   await prisma.cartItem.delete({
     where: {
-      id: +params.cartItemId,
+      id: cartItem.id,
+
     },
   });
 

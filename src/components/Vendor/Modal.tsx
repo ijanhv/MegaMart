@@ -139,8 +139,8 @@ const Modal = ({ setShowModal }: ModalProps) => {
                         className="w-full border border-secondary-400 text-secondary-600 bg-secondary-50 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-primary-600"
                         placeholder="Enter product categories"
                       >
-                        <option value="1">Men's Clothing</option>
-                        <option value="2">Women's Clothing</option>
+                        <option value="1">Men`&aposs Clothing</option>
+                        <option value="2">Women`&aposs Clothing</option>
                         <option value="2">Kids</option>
                         <option value="3">Shoes</option>
                         <option value="4">Accessories</option>

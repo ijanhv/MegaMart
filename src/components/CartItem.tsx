@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { Trash2Icon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { Toaster, toast } from "react-hot-toast";
 
 interface Props {
   product: any;
@@ -11,14 +12,42 @@ interface Props {
 }
 
 const CartItem = ({ product, quantity }: Props) => {
+  const { data: session } = useSession();
   console.log("cart item is here", product);
   const [count, setCount] = useState(1);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    () =>
+      axios.delete(`/api/user/cart/${product.id}`, {
+        headers: {
+          Authorization: `${session?.user?.accessToken}`,
+        },
+      }),
+    {
+      onSuccess: () => {
+        queryClient.refetchQueries(["cart"]);
+        queryClient.invalidateQueries(["user"]); // Pass an array of query keys
+
+        toast.success("Product removed from cart");
+      },
+      onError: (error: any) => {
+        toast.error(error?.response?.data.error);
+      },
+    }
+  );
+
+
+
 
   return (
     <>
       <div className="p-4 lg:w-1/2">
         <div className="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
-          <img
+          <Image
+            width={200}
+            height={200}
             alt="team"
             className="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4"
             src={product.imageUrl}
@@ -40,6 +69,18 @@ const CartItem = ({ product, quantity }: Props) => {
                 <p className=" text-secondary-500">Qty: {quantity}</p>
               </div>
             </span>
+
+            {/* Trach icon */}
+            <div className="flex items-center text-lg font-bold">
+              <button 
+              onClick={() => mutation.mutate()}
+              className=" text-primary-600 items-start hover:text-secondary-600">
+                <Trash2Icon size={30} />
+              </button>
+   
+      
+            </div>
+
             {/* <div className="flex items-center gap-4 font-bold">
               <button className="bg-primary-600 text-white rounded-full p-0.5 hover:bg-primary-500"
               onClick={() => setCount((prev) => prev + 1)}
@@ -56,6 +97,7 @@ const CartItem = ({ product, quantity }: Props) => {
             </div>
           </div>
         </div>
+        <Toaster />
       </div>
     </>
   );

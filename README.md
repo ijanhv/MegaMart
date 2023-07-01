@@ -34,3 +34,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## Description
+
+MegaMart is a fullstack ecommerce application built with Nextjs, TailwindCSS, Typescript, React Tanstack Query, Prisma, and MySQL. This is an ecommerce application where users can browse and search for products, filter by category, price, and rating. Vendors can create products, edit products, and delete products. 
+
+## Features
+
+- JWT Authentication used for login and registraton
+- Prisma ORM used for database queries
+- React Tanstack Query used for data fetching
+- TailwindCSS used for styling
+- Users can login and reigster with email and password
+- Users can browse and search for products, filter by category, price, and rating
+- Vendors can create products, edit products, and delete products
+
+
+## Tech Stack
+
+- Nextjs
+- TailwindCSS
+- Typescript
+- React Tanstack Query
+- Prisma
+- MySQL
+

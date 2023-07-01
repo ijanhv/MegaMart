@@ -56,7 +56,7 @@ const AppBar = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-7 text-center text-secondary-600 text-sm ">
-          {session && <><Link
+          {session?.expires && <><Link
             href="/account/wishlist"
             className="hover:text-primary-600 transition cursor-pointer relative"
           >

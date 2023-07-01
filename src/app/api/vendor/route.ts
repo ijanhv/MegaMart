@@ -1,6 +1,7 @@
 // login register for vendor
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcrypt";
+import { validateAccessToken } from "@/lib/jwt";
 
 interface RequestBody {
   name: string;
@@ -9,10 +10,54 @@ interface RequestBody {
   address: string;
 }
 
-// get hello
-export async function GET() {
-  return new Response(JSON.stringify({ hello: "world" }));
+//get current vendor from local storage
+
+export async function GET(request: Request) {
+  const userId = await validateAccessToken(request);
+  if (!userId) {
+    return new Response(
+      JSON.stringify({
+        error: "unauthorized",
+      }),
+      {
+        status: 401,
+      }
+    );
+  }
+
+  const vendor = await prisma.vendor.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      address: true,
+      role: true,
+      products: true,
+    },
+
+  });
+
+  if (!vendor) {
+    return new Response(
+      JSON.stringify({
+        error: "vendor not found",
+      }),
+      {
+        status: 404,
+      }
+    );
+  }
+
+ 
+
+  return new Response(JSON.stringify(vendor));
 }
+
+
+
 
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
@@ -52,3 +97,5 @@ export async function POST(request: Request) {
 
   return new Response(JSON.stringify(result));
 }
+
+

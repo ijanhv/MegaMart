@@ -21,7 +21,7 @@ export async function POST(request: NextRequest, ) {
     const { password, ...userWithoutPass } = vendor;
     console.log("userWithoutPass", userWithoutPass);
     const accessToken = signJwtAccessToken(userWithoutPass);
-    
+
 
     const result = {
       ...userWithoutPass,

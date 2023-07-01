@@ -5,6 +5,7 @@ import { TbClockHour1 } from "react-icons/tb";
 import { RiArrowDropDownLine, RiDeleteBin5Fill } from "react-icons/ri";
 import { LuEdit } from "react-icons/lu";
 import Modal from "./Modal";
+import Image from "next/image";
 
 const tableData = [
   {
@@ -63,7 +64,7 @@ const tableData = [
   },
 ];
 
-const ProductTable = () => {
+const ProductTable = ({ products } : any) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -101,9 +102,18 @@ const ProductTable = () => {
       <table className="w-full text-sm text-left text-secondary-700 bg-primary-600">
         <thead className="text-xs text-secondary-50 uppercase ">
           <tr>
+            <th scope="col" className="px-6 py-3">
+              Product id
+            </th>
            
             <th scope="col" className="px-6 py-3">
               Product name
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Product Image
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Product Description
             </th>
             <th scope="col" className="px-6 py-3">
               Color
@@ -122,16 +132,26 @@ const ProductTable = () => {
             </th>
           </tr>
         </thead>
-        <tbody className="overflow-x-auto h-[400px]">
-          {tableData.map((item, i) => (
+        <tbody className="overflow-x-auto h-[200px]">
+          {products?.map((item : any, i : number)  => (
             <tr key={i} className="bg-secondary-50 border-b hover:bg-gray-50 ">
-              
-              <th
-                scope="row"
+             <td className="px-6 py-4">{item.id}</td>
+              <td
+      
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
               >
                 {item.name}
-              </th>
+              </td>
+              <td className="px-6 py-4">
+                <Image
+                  width={80}
+                  height={80}
+                  src={item.imageUrl}
+                  alt=""
+                  className="w-20 h-20 object-cover rounded-lg"
+                />
+                  </td>
+              <td className="px-6 py-4">{item.description}</td>
               <td className="px-6 py-4">{item.color}</td>
               <td className="px-6 py-4">{item.category}</td>
               <td className="px-6 py-4">{item.price}</td>

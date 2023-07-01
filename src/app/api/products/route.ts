@@ -56,7 +56,7 @@ export async function GET(request: Request) {
       if (minPrice !== "0" || maxPrice !== "Infinity") {
         filter.price = {
           gte: parseFloat(minPrice) || 0,
-          lte: parseFloat(maxPrice) || Infinity,
+          lte: parseFloat(maxPrice) || 5678,
         };
       }
   

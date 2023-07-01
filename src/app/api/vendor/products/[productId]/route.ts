@@ -129,5 +129,23 @@ export async function DELETE(
     },
   });
 
+  // update number of products in vendor table
+
+  const vendor = await prisma.vendor.findFirst({
+    where: {
+      id: userId,
+    },
+  });
+
+  const updatedVendor = await prisma.vendor.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      ...vendor,
+      numberOfProducts: vendor!.numberOfProducts - 1,
+    },
+  });
+
   return new Response(JSON.stringify(deletedProduct));
 }
