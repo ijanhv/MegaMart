@@ -23,7 +23,12 @@ const AppBar = () => {
 
   console.log("*****USER*****", data?.data);
 
-  const cartItems = data?.data.cartItems?.length;
+  const cartItems = data?.data.cartItems.map(
+    (item: any) => item.quantity
+  ).reduce((a: any, b: any) => a + b, 0
+  )
+
+
   const wishlistItems = data?.data.Wishlist?.length;
 
   return (

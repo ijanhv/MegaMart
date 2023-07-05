@@ -215,20 +215,17 @@ export async function PUT(
 
   console.log("quantity", cartItem.quantity);
 
-
   const body: RequestBody = await request.json();
   const { quantity } = body;
   console.log("body quantity", quantity);
 
-  const newQuantity = cartItem.quantity +  quantity;
-  
   if (cartItem) {
     await prisma.cartItem.update({
       where: {
         id: cartItem.id,
       },
       data: {
-        quantity: newQuantity
+        quantity
       },
     });
 

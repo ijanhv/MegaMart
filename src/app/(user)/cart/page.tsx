@@ -27,6 +27,11 @@ const Cart = () => {
 
   console.log("here are cartItems", data?.data);
 
+  const totalQuantity = data?.data.map(
+    (item: any) => item.quantity
+  ).reduce((a: any, b: any) => a + b, 0
+  )
+
   const totalPrice = data?.data.reduce(
     (acc: any, item: any) => acc + item.product.price * item.quantity,
     0
@@ -57,7 +62,7 @@ const Cart = () => {
           </div>
         ) : (
           <>
-            <div className="flex flex-wrap -m-4">
+            <div className="grid sm:grid-cols-2 grid-cols-1 space-x-3 space-y-2">
               {data?.data.map((item: any) => (
                 <CartItem
                   key={item.id}
@@ -71,7 +76,7 @@ const Cart = () => {
           {/* Total price and quantity */}
             <div className="flex justify-end items-center gap-6 mt-10">
                 <p className="text-secondary-600 text-2xl font-semibold">
-                  Subtotal ({data?.data.length} items)
+                  Subtotal ({totalQuantity} items)
                 </p>
                 <p className="text-secondary-600 text-2xl font-semibold">
                   ${totalPrice}

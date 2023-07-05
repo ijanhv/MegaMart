@@ -60,23 +60,8 @@ const ProductCard = ({ product }: any) => {
       }),
     {
       onSuccess: () => {
-        // Manually update the cart count
-        queryClient.setQueryData(["user"], (previousData: any) => {
-          // Update the cartItems count
-          const updatedData = {
-            ...previousData,
-            data: {
-              ...previousData.data,
-              cartItems: [
-                // Add the new item to the existing cartItems
-                ...previousData.data.cartItems,
-                // You may need to adjust the format of the new item
-                { id: product.id, name: product.name, price: product.price },
-              ],
-            },
-          };
-          return updatedData;
-        });
+        queryClient.refetchQueries(["cart"]);
+        queryClient.invalidateQueries(["user"]); 
 
         toast.success("Item Added to cart");
       },
