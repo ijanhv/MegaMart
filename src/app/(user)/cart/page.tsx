@@ -82,9 +82,11 @@ const Cart = () => {
                   ${totalPrice}
                 </p>
               </div>
-            <button className="flex mx-auto mt-16 text-white bg-primary-600 border-0 py-2 px-8 focus:outline-none hover:bg-primary-500 rounded text-lg">
+            <Link 
+            href="/checkout"
+            className="flex mx-auto mt-16 text-white bg-primary-600 border-0 py-2 px-8 focus:outline-none hover:bg-primary-500 rounded text-lg">
               Checkout
-            </button>
+            </Link>
           </>
         )}
       </div>

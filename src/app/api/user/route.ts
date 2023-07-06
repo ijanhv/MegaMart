@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       name,
       email,
       password: await bcrypt.hash(password, 10),
-      address
+      // address
       
     },
   });
@@ -35,7 +35,8 @@ export async function POST(request: Request) {
     id: user.id,
     name: user.name,
     email: user.email,
-    address: user.address,
+    // address: user.address,
+
   };
 
   return new Response(JSON.stringify(result));
@@ -55,7 +56,7 @@ export async function PUT(request: Request) {
       name,
       email,
       password: await bcrypt.hash(password, 10),
-      address
+      // address
     },
   });
 
@@ -63,7 +64,7 @@ export async function PUT(request: Request) {
     id: user.id,
     name: user.name,
     email: user.email,
-    address: user.address,
+    // address: user.address,
   };
 
   return new Response(JSON.stringify(result));
