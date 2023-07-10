@@ -66,7 +66,8 @@ const ProductCard = ({ product }: any) => {
         toast.success("Item Added to cart");
       },
       onError: (error: any) => {
-        toast.error(error?.response?.data.error);
+
+        toast.error(error?.response?.data.error || "Something went wrong");
       },
     }
   );

@@ -36,6 +36,8 @@ model Address {
   zipcode   String
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
 }
 
 // Wishlist model
@@ -50,11 +52,25 @@ model Wishlist {
 
 // Order model 
 model Order {
-  id        Int      @id @default(autoincrement())
-  updatedAt DateTime @updatedAt
+  id        Int          @id @default(autoincrement())
+  updatedAt DateTime     @updatedAt
   total     Float
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
+  items     OrderItems[]
+  createdAt DateTime     @default(now())
+  address   Address[]
+  isPaid    Boolean      @default(false)
+}
+
+model OrderItems {
+  id        Int      @id @default(autoincrement())
+  updatedAt DateTime @updatedAt
+  quantity  Int
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  Order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int
 }
 
 // CartItem model
@@ -66,6 +82,7 @@ model CartItem {
   product   Product  @relation(fields: [productId], references: [id])
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  orderId   Int?
 
   @@unique([productId, userId])
 }
@@ -103,7 +120,8 @@ model Product {
   Review        Review[]
   Wishlist      Wishlist[]
 
-  CartItem CartItem[]
+  CartItem   CartItem[]
+  OrderItems OrderItems[]
 
   @@unique([vendorId, id])
 }
