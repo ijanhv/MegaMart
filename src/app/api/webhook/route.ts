@@ -1,7 +1,6 @@
 import Stripe from "stripe"
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
-
 import { stripe } from "@/lib/stripe"
 import prisma from "@/lib/prisma"
 
@@ -44,26 +43,24 @@ export async function POST(req: Request) {
       },
       data: {
         isPaid: true,
-        address: addressString,
-        phone: session?.customer_details?.phone || '',
       },
       include: {
-        orderItems: true,
+        items: true,
       }
     });
 
-    const productIds = order.orderItems.map((orderItem) => orderItem.productId);
+    // const productIds = order.orderItems.map((orderItem) => orderItem.productId);
 
-    await prisma.product.updateMany({
-      where: {
-        id: {
-          in: [...productIds],
-        },
-      },
-      data: {
+    // await prisma.product.updateMany({
+    //   where: {
+    //     id: {
+    //       in: [...productIds],
+    //     },
+    //   },
+    //   data: {
         
-      }
-    });
+    //   }
+    // });
   }
 
   return new NextResponse(null, { status: 200 });
