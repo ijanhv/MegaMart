@@ -142,10 +142,16 @@ export async function POST(request: Request) {
         shipping_rate: "shr_1NTK5kSB84mCMsrln9X3Ps4x",
       },
     ],
-    success_url: `http://localhost:3000/cart?success=1`,
+    success_url: `http://localhost:3000`,
     cancel_url: `http://localhost:3000/cart?canceled=1`,
     metadata: {
       orderId: order.id,
+    },
+  });
+
+  prisma.cartItem.deleteMany({
+    where: {
+      userId : userId,
     },
   });
 

@@ -61,7 +61,7 @@ const AppBar = () => {
 
         {/* Icons */}
         <div className="flex items-center space-x-7 text-center text-secondary-600 text-sm ">
-          {session?.expires && <><Link
+          {data?.data && <><Link
             href="/account/wishlist"
             className="hover:text-primary-600 transition cursor-pointer relative"
           >
@@ -89,8 +89,12 @@ const AppBar = () => {
               <User size={28} strokeWidth={1.5} />
             </Link>
 
-            {session?.user && (
-              <p className="text-sm font-poppins">{session?.user.name}</p>
+            {data?.data ? (
+              <p className="text-sm font-poppins">{data.data?.name}</p>
+            ) : (
+              <Link
+                href="/api/auth/signin"
+              className="text-sm font-poppins">Sign In</Link>
             )}
           </div>
         </div>
