@@ -19,6 +19,7 @@ const AppBar = () => {
         },
       }),
     enabled: !!session?.user?.accessToken,
+    
   });
 
   console.log("*****USER*****", data?.data);

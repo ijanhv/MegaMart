@@ -36,6 +36,7 @@ const UserLogin = ({ setAuth }: UserLoginProps) => {
         toast.success("Login Successfull!");
         await new Promise<void>((resolve) => setTimeout(resolve, 2000));
         router.push("/");
+        router.refresh();
       }
 
       if(res?.error === "CredentialsSignin") {

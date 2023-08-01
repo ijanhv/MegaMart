@@ -37,10 +37,10 @@ export async function GET(request: Request) {
     },
     include: {
       product: true,
-      user: true,
-    },
+
+    }
+
   });
 
   return new Response(JSON.stringify(cartItems));
 }
-

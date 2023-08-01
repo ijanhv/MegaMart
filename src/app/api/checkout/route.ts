@@ -149,11 +149,9 @@ export async function POST(request: Request) {
     },
   });
 
-  prisma.cartItem.deleteMany({
-    where: {
-      userId : userId,
-    },
-  });
+ //delete items from cart
+
+ 
 
   return NextResponse.json({ url: session.url });
 }
